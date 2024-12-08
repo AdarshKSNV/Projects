@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Favorites</h1>
+    <div>
+        {% for favorite in favorites %}
+            <img src="{{ favorite[2] }}" alt="Favorite Image" style="width: 300px; padding:20px;">
+        {% endfor %}
+    </div>
+{% endblock %}

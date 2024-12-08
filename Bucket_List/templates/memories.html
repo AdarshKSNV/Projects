@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Memories</h1>
+
+    <!-- Upload Form -->
+    <form method="POST" enctype="multipart/form-data" class="upload-form">
+        <input type="file" name="image" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <!-- Display Memories in Grid -->
+    <h2>Uploaded Memories</h2>
+    <div class="memories-grid">
+        {% for image in images %}
+            <div class="memory-item">
+                <!-- Check if image[2] exists and is a valid URL -->
+                <img src="{{ image[2] if image[2] else '/static/images/placeholder.jpg' }}" alt="Memory Image">
+                <a href="/mark_favorite/{{ image[0] }}" class="mark-favorite-btn">Mark Favorite</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+<style>
+    /* Styling for the upload form */
+    .upload-form {
+        margin-bottom: 20px;
+    }
+
+    .upload-form input, .upload-form button {
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .upload-form button {
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+
+    .upload-form button:hover {
+        background-color: #45a049;
+    }
+
+    /* Styling for the memories grid */
+    .memories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    /* Styling for each memory item */
+    .memory-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .memory-item img {
+        width: 150px;  /* Set the image width to a fixed smaller size */
+        height: auto;  /* Maintain aspect ratio */
+        max-width: 100%;  /* Ensure image doesn't exceed the width of the container */
+        display: block;  /* Remove any inline spacing */
+        margin-bottom: 10px;
+    }
+
+    /* Styling for the 'Mark Favorite' button */
+    .mark-favorite-btn {
+        padding: 10px 15px;
+        text-decoration: none;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 5px;
+        font-weight: bold;
+        text-align: center;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .mark-favorite-btn:hover {
+        background-color: #45a049;
+    }
+
+    .mark-favorite-btn:focus, .mark-favorite-btn:active {
+        outline: none;
+        background-color: #3e8e41;
+    }
+
+    /* Responsive grid adjustments */
+    @media screen and (max-width: 600px) {
+        .memories-grid {
+            grid-template-columns: repeat(2, 1fr); /* 2 columns on small screens */
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        .memories-grid {
+            grid-template-columns: 1fr; /* 1 column on very small screens */
+        }
+    }
+</style>
